@@ -33,12 +33,16 @@
             color: var(--white);
             padding: 1rem 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 15px;
         }
         
         .header-content {
@@ -54,21 +58,23 @@
         }
         
         .logo h1 {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             margin-left: 10px;
         }
         
         .logo-icon {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2rem);
         }
         
         nav ul {
             display: flex;
             list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         
         nav ul li {
-            margin-left: 1.5rem;
+            margin: 0.3rem 0.5rem;
         }
         
         nav ul li a {
@@ -76,10 +82,14 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
         }
         
         nav ul li a:hover {
             color: var(--accent-color);
+            background-color: rgba(255,255,255,0.1);
         }
         
         .hero {
@@ -88,16 +98,24 @@
             background-position: center;
             color: var(--white);
             text-align: center;
-            padding: 5rem 1rem;
+            padding: clamp(3rem, 8vw, 5rem) 1rem;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-content {
+            width: 100%;
         }
         
         .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             max-width: 800px;
             margin: 0 auto 2rem;
         }
@@ -106,29 +124,33 @@
             display: inline-block;
             background-color: var(--secondary-color);
             color: var(--white);
-            padding: 0.8rem 1.5rem;
+            padding: clamp(0.7rem, 2vw, 0.8rem) clamp(1.2rem, 3vw, 1.5rem);
             border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            border: 2px solid var(--secondary-color);
         }
         
         .btn:hover {
             background-color: var(--dark-color);
+            border-color: var(--dark-color);
+            transform: translateY(-2px);
         }
         
         section {
-            padding: 4rem 0;
+            padding: clamp(2.5rem, 6vw, 4rem) 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: clamp(2rem, 5vw, 3rem);
             color: var(--primary-color);
         }
         
         .section-title h2 {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2rem);
             position: relative;
             display: inline-block;
             padding-bottom: 10px;
@@ -148,7 +170,7 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 2rem;
+            gap: clamp(1.5rem, 4vw, 2rem);
         }
         
         .about-text {
@@ -168,6 +190,11 @@
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.5s;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.03);
         }
         
         .objectives {
@@ -188,7 +215,7 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 2rem;
+            gap: clamp(1.5rem, 4vw, 2rem);
         }
         
         .definition-text {
@@ -208,6 +235,11 @@
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.5s;
+        }
+        
+        .definition-image:hover img {
+            transform: scale(1.03);
         }
         
         .checklist {
@@ -224,6 +256,7 @@
             color: var(--primary-color);
             margin-right: 10px;
             font-weight: bold;
+            flex-shrink: 0;
         }
         
         .team-section {
@@ -232,25 +265,26 @@
         
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
         }
         
         .team-member {
             text-align: center;
-            padding: 1.5rem;
+            padding: clamp(1rem, 3vw, 1.5rem);
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: all 0.3s;
             background-color: var(--white);
         }
         
         .team-member:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
         .member-icon {
-            font-size: 3rem;
+            font-size: clamp(2.5rem, 6vw, 3rem);
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
@@ -258,6 +292,7 @@
         .member-name {
             font-weight: bold;
             margin-bottom: 0.5rem;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
         }
         
         .planning-section {
@@ -275,15 +310,15 @@
         
         .step {
             display: flex;
-            margin-bottom: 2rem;
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
             align-items: flex-start;
         }
         
         .step-number {
             background-color: var(--primary-color);
             color: var(--white);
-            width: 40px;
-            height: 40px;
+            width: clamp(35px, 8vw, 40px);
+            height: clamp(35px, 8vw, 40px);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -291,16 +326,23 @@
             font-weight: bold;
             margin-right: 1rem;
             flex-shrink: 0;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
         }
         
         .step-content {
             flex: 1;
         }
         
+        .step-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+        }
+        
         .tips-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(1.5rem, 3vw, 2rem);
         }
         
         .tip-card {
@@ -308,54 +350,73 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .tip-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
         .tip-icon {
             background-color: var(--primary-color);
             color: var(--white);
-            font-size: 2.5rem;
-            padding: 1.5rem;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            padding: clamp(1rem, 3vw, 1.5rem);
             text-align: center;
         }
         
         .tip-content {
-            padding: 1.5rem;
+            padding: clamp(1rem, 3vw, 1.5rem);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .tip-content h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+        }
+        
+        .tip-content p {
+            flex-grow: 1;
         }
         
         .quote-section {
             background-color: var(--primary-color);
             color: var(--white);
             text-align: center;
-            padding: 3rem 1rem;
+            padding: clamp(2rem, 5vw, 3rem) 1rem;
         }
         
         .quote {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             font-style: italic;
             max-width: 800px;
             margin: 0 auto;
+            line-height: 1.4;
         }
         
         .more-info-section {
             background-color: var(--light-color);
             text-align: center;
-            padding: 3rem 1rem;
+            padding: clamp(2rem, 5vw, 3rem) 1rem;
+        }
+        
+        .more-info-section h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
         }
         
         footer {
             background-color: var(--dark-color);
             color: var(--white);
-            padding: 2rem 0;
+            padding: clamp(1.5rem, 4vw, 2rem) 0;
             text-align: center;
         }
         
@@ -376,6 +437,7 @@
         
         .footer-logo h3 {
             margin-left: 10px;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
         }
         
         .footer-info {
@@ -383,35 +445,124 @@
             max-width: 600px;
         }
         
+        .footer-info p {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+        
         .copyright {
             margin-top: 2rem;
             padding-top: 1rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             width: 100%;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
         }
         
+        /* Hamburguer menu for mobile */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Responsive adjustments */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 text-align: center;
             }
             
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            
             nav ul {
-                margin-top: 1rem;
-                justify-content: center;
+                flex-direction: column;
+                display: none;
+            }
+            
+            nav ul.show {
+                display: flex;
             }
             
             nav ul li {
-                margin: 0 0.5rem;
+                margin: 0.3rem 0;
+                width: 100%;
             }
             
-            .hero h2 {
-                font-size: 2rem;
+            nav ul li a {
+                display: block;
+                padding: 0.5rem;
             }
             
-            .section-title h2 {
-                font-size: 1.8rem;
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
             }
+            
+            .about-content,
+            .definition-content {
+                flex-direction: column;
+            }
+            
+            .about-text,
+            .definition-text {
+                order: 2;
+            }
+            
+            .about-image,
+            .definition-image {
+                order: 1;
+                margin-bottom: 1.5rem;
+            }
+            
+            .step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 0 10px;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 2rem 0;
+            }
+            
+            .hero {
+                min-height: 50vh;
+            }
+        }
+        
+        /* Animation for smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
@@ -423,8 +574,9 @@
                     <span class="logo-icon">🌱</span>
                     <h1>Reduce tu Huella Ecológica</h1>
                 </div>
+                <button class="menu-toggle" id="menuToggle">☰</button>
                 <nav>
-                    <ul>
+                    <ul id="navMenu">
                         <li><a>Inicio</a></li>
                         <li><a>Acerca</a></li>
                         <li><a>Definición</a></li>
@@ -440,9 +592,11 @@
 
     <section class="hero">
         <div class="container">
-            <h2>CAMPAÑA ECOLÓGICA "REDUCE TU HUELLA ECOLÓGICA"</h2>
-            <p>Un proyecto para fomentar hábitos sostenibles y motivar a las personas a cambiar algunos de sus hábitos para ayudar al cuidado ambiental donde vivimos.</p>
-            <a href="https://www.un.org/sustainabledevelopment/es/actnow/" target="_blank" class="btn">Descubre Cómo Ayudar</a>
+            <div class="hero-content">
+                <h2>CAMPAÑA ECOLÓGICA "REDUCE TU HUELLA ECOLÓGICA"</h2>
+                <p>Un proyecto para fomentar hábitos sostenibles y motivar a las personas a cambiar algunos de sus hábitos para ayudar al cuidado ambiental donde vivimos.</p>
+                <a href="https://www.un.org/sustainabledevelopment/es/actnow/" target="_blank" class="btn">Descubre Cómo Ayudar</a>
+            </div>
         </div>
     </section>
 
@@ -638,5 +792,23 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('show');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const menuToggle = document.getElementById('menuToggle');
+            
+            if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                navMenu.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
