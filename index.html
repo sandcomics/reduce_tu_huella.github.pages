@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reduce tu Huella Ecológica</title>
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #4caf50;
+            --accent-color: #8bc34a;
+            --light-color: #e8f5e9;
+            --dark-color: #1b5e20;
+            --text-color: #333;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            text-align: center;
+            padding: 5rem 1rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .objectives {
+            background-color: var(--light-color);
+        }
+        
+        .objectives-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .definition-section {
+            background-color: var(--white);
+        }
+        
+        .definition-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .definition-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .definition-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .definition-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .checklist {
+            margin-top: 1.5rem;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .checklist-icon {
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .team-section {
+            background-color: var(--light-color);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            background-color: var(--white);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        
+        .member-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .member-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .planning-section {
+            background-color: var(--white);
+        }
+        
+        .planning-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .planning-steps {
+            margin-top: 2rem;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tip-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tip-icon {
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-size: 2.5rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .tip-content {
+            padding: 1.5rem;
+        }
+        
+        .tip-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .quote-section {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        
+        .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .more-info-section {
+            background-color: var(--light-color);
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+        
+        .footer-logo h3 {
+            margin-left: 10px;
+        }
+        
+        .footer-info {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🌱</span>
+                    <h1>Reduce tu Huella Ecológica</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a>Inicio</a></li>
+                        <li><a>Acerca</a></li>
+                        <li><a>Definición</a></li>
+                        <li><a>Objetivos</a></li>
+                        <li><a>Equipo</a></li>
+                        <li><a>Planificación</a></li>
+                        <li><a>Consejos</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>CAMPAÑA ECOLÓGICA "REDUCE TU HUELLA ECOLÓGICA"</h2>
+            <p>Un proyecto para fomentar hábitos sostenibles y motivar a las personas a cambiar algunos de sus hábitos para ayudar al cuidado ambiental donde vivimos.</p>
+            <a href="https://www.un.org/sustainabledevelopment/es/actnow/" target="_blank" class="btn">Descubre Cómo Ayudar</a>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>INTRODUCCIÓN</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>La huella ecológica busca enseñar y motivar a las personas o estudiantes a cambiar algunos de sus hábitos para poder ayudar al Cuidado Ambiental donde vivimos con pequeñas acciones como ahorrar agua, apagar las luces que no usamos y no comprar demás o cosas que no necesitamos en el supermercado para poder hacer una diferencia.</p>
+                    <p>Ayudar a comprender la importancia de reducir tu huella y buscamos que tanto como estudiantes y diferentes personas aprendan aprovechar más sus recursos sin consumir de más solo lo necesario y reducir el daño Ambiental en la zona en la que vivimos.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Naturaleza y sostenibilidad">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="definition-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>¿QUÉ ES LA HUELLA ECOLÓGICA?</h2>
+            </div>
+            <div class="definition-content">
+                <div class="definition-text">
+                    <p>Según su estilo de vida, un individuo ejerce un mayor o menor impacto sobre el medio ambiente. Calcular su huella ecológica permite entonces limitar su impacto sobre el planeta reduciendo la cantidad de gases de efecto invernadero relacionados con las actividades humanas.</p>
+                    
+                    <p>La huella ecológica, también conocida como huella medioambiental, es una forma de medir el impacto que la humanidad ejerce sobre el planeta. Es la superficie ecológicamente productiva necesaria para producir los recursos consumidos por un individuo, así como la necesaria para absorber los residuos que genera.</p>
+                    
+                    <p>Se utiliza como indicador de sostenibilidad de escala internacional, para medir el impacto de nuestros hábitos en el entorno.</p>
+                    
+                    <div class="checklist">
+                        <p>El concepto del cálculo de la huella ecológica surge de los siguientes aspectos:</p>
+                        <div class="checklist-item">
+                            <span class="checklist-icon">✔</span>
+                            <p>Para producir cualquier tipo de bienes y servicios se necesita un flujo de materiales y de energía</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="definition-image">
+                    <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Concepto de huella ecológica">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="objectives">
+        <div class="container">
+            <div class="section-title">
+                <h2>OBJETIVO</h2>
+            </div>
+            <div class="objectives-content">
+                <p>Promover el trabajo en equipo para lograr un entorno más limpio y sostenible. Queremos que las personas aprendan que cuidar el planeta no es tarea de uno solo, sino de todos al trabajar juntos ya sea en la escuela, en casa o en la comunidad podemos lograr grandes resultados.</p>
+                <p>Con actividades grupales como recolectar materiales reciclables, elaborar folletos informativos y dar pláticas breves en espacios comunitarios, buscamos crear conciencia sobre el cuidado del medio ambiente.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>NUESTRO EQUIPO</h2>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-icon">👨‍🎓</div>
+                    <div class="member-name">Roberto Carlos Hernandez Solis</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-icon">👩‍🎓</div>
+                    <div class="member-name">Wendy Marely Esteban Hernandez</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-icon">👨‍🎓</div>
+                    <div class="member-name">Axel Abdiel Ochoa Graniel</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-icon">👩‍🎓</div>
+                    <div class="member-name">Genesis Avril Cruz Gonzales</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-icon">👨‍🎓</div>
+                    <div class="member-name">Cesar Alexander Gonzales Lopez</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <p><strong>Docente:</strong> Juan Carlos Cruz Santos</p>
+                <p><strong>Institución:</strong> Colegio de Educación Profesional Técnica del Estado de Veracruz</p>
+                <p><strong>Materia:</strong> Formación Socioemocional V</p>
+                <p><strong>Grupo:</strong> 505 INFO</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="planning-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>PLANEACIÓN</h2>
+            </div>
+            <div class="planning-content">
+                <p>Nuestro equipo está formado por cinco personas y realizaremos diferentes actividades para crear conciencia sobre el cuidado del medio ambiente en nuestra comunidad. La campaña "Reduce tu huella" busca enseñar a las personas cómo pueden ayudar al planeta cambiando pequeños hábitos diarios.</p>
+                
+                <div class="planning-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Folletos Informativos</h3>
+                            <p>Elaboraremos folletos informativos con consejos sobre cómo reducir la huella ecológica, como ahorrar agua, apagar los aparatos eléctricos que no se usan y separar correctamente la basura. Estos folletos se repartirán en lugares públicos como parques, plazas o calles principales, donde haya más personas.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Pláticas Comunitarias</h3>
+                            <p>Daremos pláticas breves en espacios comunitarios, como centros vecinales o parques, para explicar de forma sencilla qué es la huella ecológica, por qué es importante y cómo cada persona puede contribuir a mejorar el medio ambiente desde su hogar.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Material Visual</h3>
+                            <p>Crearemos carteles informativos o infografías sobre temas específicos como el ahorro de agua, separación de basura y ahorro de energía para colocar en lugares estratégicos de la comunidad y en la institución educativa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>CONSEJOS PARA REDUCIR TU HUELLA ECOLÓGICA</h2>
+            </div>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">💧</div>
+                    <div class="tip-content">
+                        <h3>Ahorro de Agua</h3>
+                        <p>"Cierra la llave mientras te cepillas." Pequeñas acciones como esta pueden hacer una gran diferencia en el consumo de agua.</p>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🗑️</div>
+                    <div class="tip-content">
+                        <h3>Separación de Basura</h3>
+                        <p>"Identifica los botes de reciclaje y úsalos correctamente." La separación adecuada de residuos facilita el reciclaje y reduce la contaminación.</p>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">💡</div>
+                    <div class="tip-content">
+                        <h3>Ahorro de Energía</h3>
+                        <p>"Apaga las luces cuando salgas del aula." Reducir el consumo energético ayuda a disminuir las emisiones de gases de efecto invernadero.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="more-info-section">
+        <div class="container">
+            <h2>Más Información</h2>
+            <p>Para conocer más sobre sostenibilidad y acciones que puedes tomar para proteger nuestro planeta, te invitamos a explorar recursos adicionales sobre conservación ambiental.</p>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <div class="container">
+            <div class="quote">
+                <p>"Cuidar el planeta empieza con acciones conscientes, no con palabras."</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-icon">🌍</span>
+                    <h3>Reduce tu Huella Ecológica</h3>
+                </div>
+                <div class="footer-info">
+                    <p>Una campaña para fomentar hábitos sostenibles y crear conciencia sobre el cuidado del medio ambiente.</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Campaña "Reduce tu Huella Ecológica" - Todos los derechos reservados</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
