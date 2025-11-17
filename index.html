@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reduce tu Huella Ecológica</title>
     <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* Para compensar el header fijo */
+        }
+        
         :root {
-            --primary-color: #2e7d32;
+            --primary-color: #39b439;
             --secondary-color: #4caf50;
             --accent-color: #8bc34a;
             --light-color: #e8f5e9;
@@ -26,23 +31,25 @@
             background-color: #f9f9f9;
             color: var(--text-color);
             line-height: 1.6;
+            margin: 0;
+            padding-top: 80px; /* Espacio para el header fijo */
         }
         
         header {
-            background-color: var(--primary-color);
+            background-color: rgb(7, 126, 7);
             color: var(--white);
             padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
+            box-shadow: 0 2px 5px rgba(97, 12, 12, 0.1);
+            position: fixed;
+            width: 100%;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
         
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
         }
         
         .header-content {
@@ -58,23 +65,22 @@
         }
         
         .logo h1 {
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-size: 1.5rem;
             margin-left: 10px;
         }
         
         .logo-icon {
-            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-size: 2rem;
         }
         
         nav ul {
             display: flex;
+            border-left: 2px solid white;
             list-style: none;
-            flex-wrap: wrap;
-            justify-content: center;
         }
         
         nav ul li {
-            margin: 0.3rem 0.5rem;
+            margin-left: 1.5rem;
         }
         
         nav ul li a {
@@ -82,40 +88,29 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-            padding: 0.3rem 0.5rem;
-            border-radius: 4px;
         }
         
         nav ul li a:hover {
             color: var(--accent-color);
-            background-color: rgba(255,255,255,0.1);
         }
         
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://parquesalegres.org/wp-content/uploads/2021/08/conoce-la-huella-ecol%C3%B3gica.jpg');
             background-size: cover;
             background-position: center;
-            color: var(--white);
+            color: white;
             text-align: center;
-            padding: clamp(3rem, 8vw, 5rem) 1rem;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-        }
-        
-        .hero-content {
-            width: 100%;
+            padding: 5rem 1rem;
+            margin-top: -80px; /* Compensa el padding-top del body */
         }
         
         .hero h2 {
-            font-size: clamp(1.8rem, 6vw, 2.5rem);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
         
         .hero p {
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 2rem;
         }
@@ -124,53 +119,49 @@
             display: inline-block;
             background-color: var(--secondary-color);
             color: var(--white);
-            padding: clamp(0.7rem, 2vw, 0.8rem) clamp(1.2rem, 3vw, 1.5rem);
+            padding: 0.8rem 1.5rem;
             border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
-            transition: all 0.3s;
-            font-size: clamp(0.9rem, 2.5vw, 1rem);
-            border: 2px solid var(--secondary-color);
+            transition: background-color 0.3s;
         }
         
         .btn:hover {
             background-color: var(--dark-color);
-            border-color: var(--dark-color);
-            transform: translateY(-2px);
+        }
+        
+        .btn-play {
+            background-color: #ff9800;
+            margin-top: 1.5rem;
+        }
+        
+        .btn-play:hover {
+            background-color: #f57c00;
         }
         
         section {
-            padding: clamp(2.5rem, 6vw, 4rem) 0;
+            padding: 5rem 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 2rem;
             color: var(--primary-color);
         }
         
         .section-title h2 {
-            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-size: 2rem;
             position: relative;
             display: inline-block;
-            padding-bottom: 10px;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 25%;
-            width: 50%;
-            height: 3px;
-            background-color: var(--accent-color);
+            padding: 0 50px 0 50px;
+            border-bottom: 3px solid rgb(24, 199, 24);
         }
         
         .about-content {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: clamp(1.5rem, 4vw, 2rem);
+            gap: 2rem;
         }
         
         .about-text {
@@ -190,21 +181,21 @@
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.5s;
-        }
-        
-        .about-image:hover img {
-            transform: scale(1.03);
         }
         
         .objectives {
-            background-color: var(--light-color);
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://cdn-3.expansion.mx/dims4/default/4b87f11/2147483647/strip/true/crop/1143x917+0+0/resize/1200x963!/format/webp/quality/60/?url=https%3A%2F%2Fcdn-3.expansion.mx%2F00%2Fd6%2Ff815fe6e48e38e0d8173b26a73ab%2Fistock-1093771780.jpg');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid rgb(193, 230, 225);
         }
         
         .objectives-content {
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
+            padding: 1rem;
+            color: white;
         }
         
         .definition-section {
@@ -215,7 +206,7 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: clamp(1.5rem, 4vw, 2rem);
+            gap: 2rem;
         }
         
         .definition-text {
@@ -235,11 +226,6 @@
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.5s;
-        }
-        
-        .definition-image:hover img {
-            transform: scale(1.03);
         }
         
         .checklist {
@@ -256,7 +242,6 @@
             color: var(--primary-color);
             margin-right: 10px;
             font-weight: bold;
-            flex-shrink: 0;
         }
         
         .team-section {
@@ -265,26 +250,25 @@
         
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: clamp(1rem, 3vw, 2rem);
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
         }
         
         .team-member {
             text-align: center;
-            padding: clamp(1rem, 3vw, 1.5rem);
+            padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            transition: transform 0.3s;
             background-color: var(--white);
         }
         
         .team-member:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
         .member-icon {
-            font-size: clamp(2.5rem, 6vw, 3rem);
+            font-size: 3rem;
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
@@ -292,131 +276,96 @@
         .member-name {
             font-weight: bold;
             margin-bottom: 0.5rem;
-            font-size: clamp(0.9rem, 2.5vw, 1rem);
-        }
-        
-        .planning-section {
-            background-color: var(--white);
-        }
-        
-        .planning-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .planning-steps {
-            margin-top: 2rem;
-        }
-        
-        .step {
-            display: flex;
-            margin-bottom: clamp(1.5rem, 3vw, 2rem);
-            align-items: flex-start;
-        }
-        
-        .step-number {
-            background-color: var(--primary-color);
-            color: var(--white);
-            width: clamp(35px, 8vw, 40px);
-            height: clamp(35px, 8vw, 40px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 1rem;
-            flex-shrink: 0;
-            font-size: clamp(0.9rem, 2.5vw, 1rem);
-        }
-        
-        .step-content {
-            flex: 1;
-        }
-        
-        .step-content h3 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
         }
         
         .tips-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: clamp(1.5rem, 3vw, 2rem);
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
         }
         
         .tip-card {
-            background-color: var(--white);
+            background-color: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            transition: transform 0.3s;
         }
         
         .tip-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            background: rgb(233, 255, 238);
         }
         
         .tip-icon {
             background-color: var(--primary-color);
             color: var(--white);
-            font-size: clamp(2rem, 5vw, 2.5rem);
-            padding: clamp(1rem, 3vw, 1.5rem);
+            font-size: 2.5rem;
+            padding: 1.5rem;
             text-align: center;
         }
         
         .tip-content {
-            padding: clamp(1rem, 3vw, 1.5rem);
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
+            padding: 1.5rem;
         }
         
         .tip-content h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
-        }
-        
-        .tip-content p {
-            flex-grow: 1;
         }
         
         .quote-section {
             background-color: var(--primary-color);
             color: var(--white);
             text-align: center;
-            padding: clamp(2rem, 5vw, 3rem) 1rem;
+            padding: 3rem 1rem;
         }
         
         .quote {
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-size: 1.5rem;
             font-style: italic;
             max-width: 800px;
             margin: 0 auto;
-            line-height: 1.4;
         }
         
         .more-info-section {
             background-color: var(--light-color);
             text-align: center;
-            padding: clamp(2rem, 5vw, 3rem) 1rem;
+            padding: 3rem 1rem;
         }
         
-        .more-info-section h2 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-            font-size: clamp(1.3rem, 4vw, 1.8rem);
+        .container-video {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            background-color: rgb(233, 255, 238);
+            background: url('https://www.shutterstock.com/image-vector/ecology-pattern-background-collection-260nw-2366899319.jpg');
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        
+        .v {
+            background-color: rgb(63, 104, 47);
+            width: 300px;
+            height: 300px;
+            display: flex;
+            flex: 1 0 300px;
+            border-radius: 10px;
+            margin: 10px;
+            box-shadow: 10px 10px rgb(156, 156, 156);
+            overflow: hidden;
+        }
+        
+        #video {
+            border-radius: 10px;
+            width: 100%;
+            height: 100%;
         }
         
         footer {
             background-color: var(--dark-color);
             color: var(--white);
-            padding: clamp(1.5rem, 4vw, 2rem) 0;
+            padding: 2rem 0;
             text-align: center;
         }
         
@@ -437,7 +386,6 @@
         
         .footer-logo h3 {
             margin-left: 10px;
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
         }
         
         .footer-info {
@@ -445,124 +393,50 @@
             max-width: 600px;
         }
         
-        .footer-info p {
-            font-size: clamp(0.9rem, 2.5vw, 1rem);
-        }
-        
         .copyright {
             margin-top: 2rem;
             padding-top: 1rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             width: 100%;
-            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
         }
         
-        /* Hamburguer menu for mobile */
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        /* Responsive adjustments */
         @media (max-width: 768px) {
+            body {
+                padding-top: 120px; /* Más espacio para header en móviles */
+            }
+            
             .header-content {
                 flex-direction: column;
                 text-align: center;
             }
             
-            .logo {
-                margin-bottom: 0.5rem;
-            }
-            
-            nav {
-                width: 100%;
-                margin-top: 0.5rem;
-            }
-            
             nav ul {
-                flex-direction: column;
-                display: none;
-            }
-            
-            nav ul.show {
-                display: flex;
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
             }
             
             nav ul li {
-                margin: 0.3rem 0;
-                width: 100%;
-            }
-            
-            nav ul li a {
-                display: block;
-                padding: 0.5rem;
-            }
-            
-            .menu-toggle {
-                display: block;
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
-            }
-            
-            .about-content,
-            .definition-content {
-                flex-direction: column;
-            }
-            
-            .about-text,
-            .definition-text {
-                order: 2;
-            }
-            
-            .about-image,
-            .definition-image {
-                order: 1;
-                margin-bottom: 1.5rem;
-            }
-            
-            .step {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            
-            .step-number {
-                margin-right: 0;
-                margin-bottom: 1rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                width: 95%;
-                padding: 0 10px;
-            }
-            
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .tips-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            section {
-                padding: 2rem 0;
+                margin: 0.5rem;
             }
             
             .hero {
-                min-height: 50vh;
+                margin-top: -120px; /* Compensa el padding-top del body en móviles */
+                padding: 4rem 1rem;
             }
-        }
-        
-        /* Animation for smooth scrolling */
-        html {
-            scroll-behavior: smooth;
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .v {
+                flex: 1 0 100%;
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -572,18 +446,16 @@
             <div class="header-content">
                 <div class="logo">
                     <span class="logo-icon">🌱</span>
-                    <h1>Reduce tu Huella Ecológica</h1>
+                    <h1 id="inicio">Reduce tu Huella Ecológica</h1>
                 </div>
-                <button class="menu-toggle" id="menuToggle">☰</button>
                 <nav>
-                    <ul id="navMenu">
-                        <li><a>Inicio</a></li>
-                        <li><a>Acerca</a></li>
-                        <li><a>Definición</a></li>
-                        <li><a>Objetivos</a></li>
-                        <li><a>Equipo</a></li>
-                        <li><a>Planificación</a></li>
-                        <li><a>Consejos</a></li>
+                    <ul>
+                        <li><a href="#hola">Inicio</a></li>
+                        <li><a href="#definicion">Definición</a></li>
+                        <li><a href="#objetivos">Objetivos</a></li>
+                        <li><a href="#equipo">Equipo</a></li>
+                        <li><a href="#consejos">Consejos</a></li>
+                        <li><a href="#videos">Videos</a></li>
                     </ul>
                 </nav>
             </div>
@@ -592,15 +464,13 @@
 
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <h2>CAMPAÑA ECOLÓGICA "REDUCE TU HUELLA ECOLÓGICA"</h2>
-                <p>Un proyecto para fomentar hábitos sostenibles y motivar a las personas a cambiar algunos de sus hábitos para ayudar al cuidado ambiental donde vivimos.</p>
-                <a href="https://www.un.org/sustainabledevelopment/es/actnow/" target="_blank" class="btn">Descubre Cómo Ayudar</a>
-            </div>
+            <h2>CAMPAÑA ECOLÓGICA "REDUCE TU HUELLA ECOLÓGICA"</h2>
+            <p>Un proyecto para fomentar hábitos sostenibles y motivar a las personas a cambiar algunos de sus hábitos para ayudar al cuidado ambiental donde vivimos.</p>
+            <a href="https://www.un.org/sustainabledevelopment/es/actnow/" target="_blank" class="btn">Descubre Cómo Ayudar</a>
         </div>
     </section>
 
-    <section>
+    <section id="hola">
         <div class="container">
             <div class="section-title">
                 <h2>INTRODUCCIÓN</h2>
@@ -617,7 +487,7 @@
         </div>
     </section>
 
-    <section class="definition-section">
+    <section id="definicion" class="definition-section">
         <div class="container">
             <div class="section-title">
                 <h2>¿QUÉ ES LA HUELLA ECOLÓGICA?</h2>
@@ -645,7 +515,7 @@
         </div>
     </section>
 
-    <section class="objectives">
+    <section id="objetivos" class="objectives">
         <div class="container">
             <div class="section-title">
                 <h2>OBJETIVO</h2>
@@ -657,7 +527,7 @@
         </div>
     </section>
 
-    <section class="team-section">
+    <section id="equipo" class="team-section">
         <div class="container">
             <div class="section-title">
                 <h2>NUESTRO EQUIPO</h2>
@@ -693,44 +563,7 @@
         </div>
     </section>
 
-    <section class="planning-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>PLANEACIÓN</h2>
-            </div>
-            <div class="planning-content">
-                <p>Nuestro equipo está formado por cinco personas y realizaremos diferentes actividades para crear conciencia sobre el cuidado del medio ambiente en nuestra comunidad. La campaña "Reduce tu huella" busca enseñar a las personas cómo pueden ayudar al planeta cambiando pequeños hábitos diarios.</p>
-                
-                <div class="planning-steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h3>Folletos Informativos</h3>
-                            <p>Elaboraremos folletos informativos con consejos sobre cómo reducir la huella ecológica, como ahorrar agua, apagar los aparatos eléctricos que no se usan y separar correctamente la basura. Estos folletos se repartirán en lugares públicos como parques, plazas o calles principales, donde haya más personas.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h3>Pláticas Comunitarias</h3>
-                            <p>Daremos pláticas breves en espacios comunitarios, como centros vecinales o parques, para explicar de forma sencilla qué es la huella ecológica, por qué es importante y cómo cada persona puede contribuir a mejorar el medio ambiente desde su hogar.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h3>Material Visual</h3>
-                            <p>Crearemos carteles informativos o infografías sobre temas específicos como el ahorro de agua, separación de basura y ahorro de energía para colocar en lugares estratégicos de la comunidad y en la institución educativa.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
+    <section id="consejos">
         <div class="container">
             <div class="section-title">
                 <h2>CONSEJOS PARA REDUCIR TU HUELLA ECOLÓGICA</h2>
@@ -761,6 +594,22 @@
         </div>
     </section>
 
+    <div id="videos" class="section-title"><h2>VIDEOS</h2></div>
+    <section class="container-video">
+        <div class="v">
+            <iframe id="video" width="100%" src="https://www.youtube.com/embed/lzYAXu7Om4s?si=4KoI2BKN9QWx1d26" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="v">
+            <iframe width="100%" src="https://www.youtube.com/embed/8veS_7yKv_c?si=1nQJYg0c6hYjKdQh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="v">
+            <iframe width="100%" src="https://www.youtube.com/embed/3P8K5dS2d4A?si=YJZqj6hx5x4c6W3f" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="v">
+            <iframe width="100%" src="https://www.youtube.com/embed/4h8l4_9yQq4?si=0Jt3wBzJt1jT0VpY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </section>
+
     <section class="more-info-section">
         <div class="container">
             <h2>Más Información</h2>
@@ -772,6 +621,7 @@
         <div class="container">
             <div class="quote">
                 <p>"Cuidar el planeta empieza con acciones conscientes, no con palabras."</p>
+                <a href="jugar.html" class="btn btn-play">JUGAR</a>
             </div>
         </div>
     </section>
@@ -788,27 +638,9 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; Campaña "Reduce tu Huella Ecológica" - Todos los derechos reservados</p>
+                <p>&copy; 2023 Campaña "Reduce tu Huella Ecológica" - Todos los derechos reservados</p>
             </div>
         </div>
     </footer>
-
-    <script>
-        // Mobile menu toggle
-        document.getElementById('menuToggle').addEventListener('click', function() {
-            const navMenu = document.getElementById('navMenu');
-            navMenu.classList.toggle('show');
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const navMenu = document.getElementById('navMenu');
-            const menuToggle = document.getElementById('menuToggle');
-            
-            if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-                navMenu.classList.remove('show');
-            }
-        });
-    </script>
 </body>
 </html>
