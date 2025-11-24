@@ -44,6 +44,12 @@
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 0.5rem 0;
+            background-color: rgba(7, 126, 7, 0.95);
         }
         
         .container {
@@ -88,10 +94,26 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
         }
         
         nav ul li a:hover {
             color: var(--accent-color);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
         }
         
         .hero {
@@ -107,12 +129,14 @@
         .hero h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            animation: fadeIn 1s ease;
         }
         
         .hero p {
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 2rem;
+            animation: fadeIn 1.5s ease;
         }
         
         .btn {
@@ -123,11 +147,16 @@
             border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
         .btn:hover {
             background-color: var(--dark-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
         }
         
         .btn-play {
@@ -141,6 +170,14 @@
         
         section {
             padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .section-title {
@@ -175,6 +212,11 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .about-image:hover {
+            transform: scale(1.02);
         }
         
         .about-image img {
@@ -220,6 +262,11 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .definition-image:hover {
+            transform: scale(1.02);
         }
         
         .definition-image img {
@@ -236,6 +283,11 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+        
+        .checklist-item:hover {
+            transform: translateX(5px);
         }
         
         .checklist-icon {
@@ -289,12 +341,13 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: all 0.3s;
         }
         
         .tip-card:hover {
             transform: translateY(-5px);
             background: rgb(233, 255, 238);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
         
         .tip-icon {
@@ -334,32 +387,76 @@
             padding: 3rem 1rem;
         }
         
-        .container-video {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            background-color: rgb(233, 255, 238);
-            background: url('https://www.shutterstock.com/image-vector/ecology-pattern-background-collection-260nw-2366899319.jpg');
-            justify-content: center;
-            padding: 2rem 1rem;
+        .videos-section {
+            background-color: var(--light-color);
+            padding: 3rem 0;
         }
         
-        .v {
-            background-color: rgb(63, 104, 47);
-            width: 300px;
-            height: 300px;
-            display: flex;
-            flex: 1 0 300px;
-            border-radius: 10px;
-            margin: 10px;
-            box-shadow: 10px 10px rgb(156, 156, 156);
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .video-card {
+            background-color: white;
+            border-radius: 8px;
             overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
         }
         
-        #video {
-            border-radius: 10px;
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            border: none;
+        }
+        
+        .video-info {
+            padding: 1rem;
+        }
+        
+        .video-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .video-info p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1001;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s;
         }
         
         footer {
@@ -400,6 +497,17 @@
             width: 100%;
         }
         
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding-top: 120px; /* Más espacio para header en móviles */
@@ -414,6 +522,7 @@
                 margin-top: 1rem;
                 justify-content: center;
                 flex-wrap: wrap;
+                border-left: none;
             }
             
             nav ul li {
@@ -433,15 +542,18 @@
                 font-size: 1.8rem;
             }
             
-            .v {
-                flex: 1 0 100%;
-                max-width: 100%;
+            .videos-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <header>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <header id="mainHeader">
         <div class="container">
             <div class="header-content">
                 <div class="logo">
@@ -466,7 +578,7 @@
         <div class="container">
             <h2>CAMPAÑA ECOLÓGICA "REDUCE TU HUELLA ECOLÓGICA"</h2>
             <p>Un proyecto para fomentar hábitos sostenibles y motivar a las personas a cambiar algunos de sus hábitos para ayudar al cuidado ambiental donde vivimos.</p>
-            <a href="https://www.un.org/sustainabledevelopment/es/actnow/" target="_blank" class="btn">Descubre Cómo Ayudar</a>
+            <a href="https://www.fundacionaquae.org/wiki/reducir-huella-ecologica/" target="_blank" class="btn">Descubre Cómo Ayudar</a>
         </div>
     </section>
 
@@ -594,19 +706,34 @@
         </div>
     </section>
 
-    <div id="videos" class="section-title"><h2>VIDEOS</h2></div>
-    <section class="container-video">
-        <div class="v">
-            <iframe id="video" width="100%" src="https://www.youtube.com/embed/lzYAXu7Om4s?si=4KoI2BKN9QWx1d26" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="v">
-            <iframe width="100%" src="https://www.youtube.com/embed/8veS_7yKv_c?si=1nQJYg0c6hYjKdQh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="v">
-            <iframe width="100%" src="https://www.youtube.com/embed/3P8K5dS2d4A?si=YJZqj6hx5x4c6W3f" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="v">
-            <iframe width="100%" src="https://www.youtube.com/embed/4h8l4_9yQq4?si=0Jt3wBzJt1jT0VpY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <section id="videos" class="videos-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>VIDEOS SOBRE HUELLA ECOLÓGICA</h2>
+            </div>
+            <p style="text-align: center; margin-bottom: 2rem;">Descubre más sobre cómo reducir tu impacto ambiental a través de estos videos educativos.</p>
+            
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/lzYAXu7Om4s" title="Huella ecológica" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>¿Qué es la Huella Ecológica?</h3>
+                        <p>Explicación sencilla sobre el concepto de huella ecológica y su importancia.</p>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/BrpFn4yF7vY" title="Video adicional" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>Consejos Prácticos para el Día a Día</h3>
+                        <p>Pequeños cambios en tu rutina que pueden marcar una gran diferencia para el planeta.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -642,5 +769,52 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Barra de progreso de desplazamiento
+        window.onscroll = function() {
+            updateProgressBar();
+            updateHeader();
+            checkVisibility();
+        };
+        
+        function updateProgressBar() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        }
+        
+        function updateHeader() {
+            const header = document.getElementById("mainHeader");
+            if (window.pageYOffset > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        }
+        
+        function checkVisibility() {
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+        
+        // Inicializar visibilidad de secciones al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            checkVisibility();
+            
+            // Añadir animación de entrada para la sección hero
+            document.querySelector('.hero').style.opacity = '1';
+            document.querySelector('.hero').style.transform = 'translateY(0)';
+        });
+    </script>
 </body>
 </html>
