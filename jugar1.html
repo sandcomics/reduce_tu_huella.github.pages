@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego: Tu Huella Ecológica</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #e8f5e9;
+            color: #1b5e20;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background-color: #2e7d32;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f1f8e9;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 15px;
+            background-color: white;
+            border: 2px solid #c8e6c9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .option:hover {
+            background-color: #f1f8e9;
+            transform: translateY(-2px);
+        }
+        
+        .option.selected {
+            background-color: #c8e6c9;
+            border-color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 14px 28px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #388e3c;
+        }
+        
+        button:disabled {
+            background-color: #a5d6a7;
+            cursor: not-allowed;
+        }
+        
+        .result-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .result-title {
+            color: #2e7d32;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin: 20px 0;
+        }
+        
+        .result-message {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f1f8e9;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .eco-tips {
+            background-color: #f1f8e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .eco-tips h3 {
+            margin-top: 0;
+            color: #2e7d32;
+        }
+        
+        .eco-tips ul {
+            text-align: left;
+            padding-left: 20px;
+        }
+        
+        .eco-tips li {
+            margin-bottom: 10px;
+        }
+        
+        .restart-btn {
+            background-color: #ff9800;
+            margin-top: 20px;
+        }
+        
+        .restart-btn:hover {
+            background-color: #f57c00;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Juego de la Huella Ecológica</h1>
+            <div class="subtitle">Descubre cuánto sabes sobre tu impacto en el planeta</div>
+        </header>
+        
+        <div class="content">
+            <!-- Pantalla de inicio -->
+            <div id="start-screen" class="screen active">
+                <h2>¡Bienvenido al juego!</h2>
+                <p>Este juego te ayudará a comprender mejor qué es la huella ecológica y cómo nuestras acciones diarias afectan al planeta.</p>
+                <p>Responde las 10 preguntas básicas para evaluar tus conocimientos sobre sostenibilidad ambiental.</p>
+                <p>Al final, obtendrás una puntuación y consejos para reducir tu huella ecológica.</p>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button id="start-btn">Comenzar Juego</button>
+                </div>
+                
+                <div class="eco-tips">
+                    <h3>¿Qué es la huella ecológica?</h3>
+                    <p>La huella ecológica es un indicador del impacto ambiental generado por la demanda humana de recursos naturales en relación con la capacidad ecológica de la Tierra para regenerarlos.</p>
+                </div>
+            </div>
+            
+            <!-- Pantalla de preguntas -->
+            <div id="quiz-screen" class="screen">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                
+                <div id="question-container">
+                    <!-- Las preguntas se cargarán aquí dinámicamente -->
+                </div>
+                
+                <div class="buttons">
+                    <button id="prev-btn" disabled>Anterior</button>
+                    <button id="next-btn">Siguiente</button>
+                </div>
+            </div>
+            
+            <!-- Pantalla de resultados -->
+            <div id="result-screen" class="screen">
+                <div class="result-container">
+                    <h2 class="result-title">¡Has completado el juego!</h2>
+                    <div class="score" id="final-score">0/10</div>
+                    <div class="result-message" id="result-message">
+                        <!-- El mensaje se cargará aquí -->
+                    </div>
+                    
+                    <div class="eco-tips">
+                        <h3>Consejos para reducir tu huella ecológica:</h3>
+                        <ul>
+                            <li>Utiliza transporte público, bicicleta o camina en lugar de usar el coche.</li>
+                            <li>Reduce el consumo de carne y productos de origen animal.</li>
+                            <li>Ahorra energía apagando luces y electrodomésticos cuando no los uses.</li>
+                            <li>Reduce, reutiliza y recicla tus residuos.</li>
+                            <li>Consume productos locales y de temporada.</li>
+                            <li>Reduce el consumo de agua en tus actividades diarias.</li>
+                        </ul>
+                    </div>
+                    
+                    <button id="restart-btn" class="restart-btn">Jugar de nuevo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preguntas y respuestas
+        const questions = [
+            {
+                question: "¿Qué es la huella ecológica?",
+                options: [
+                    "Una medida del impacto ambiental de una persona o comunidad",
+                    "La marca que dejan los animales en el bosque",
+                    "Un tipo de contaminación del agua",
+                    "Un método para reciclar plástico"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Cuál de estas acciones reduce más tu huella ecológica?",
+                options: [
+                    "Usar el coche para ir al trabajo",
+                    "Comprar productos con mucho empaquetado",
+                    "Caminar o usar bicicleta para desplazarte",
+                    "Dejar los electrodomésticos en modo standby"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué significa la regla de las 3R?",
+                options: [
+                    "Reducir, Reutilizar, Reciclar",
+                    "Reír, Recordar, Reflexionar",
+                    "Recolectar, Revender, Rechazar",
+                    "Reformar, Rehacer, Reubicar"
+                ],
+                correct: 0
+            },
+            {
+                question: "¿Cuál es el mayor contribuyente a la huella ecológica de una persona promedio?",
+                options: [
+                    "El consumo de agua",
+                    "La alimentación y el transporte",
+                    "El uso de dispositivos electrónicos",
+                    "La ropa que compramos"
+                ],
+                correct: 1
+            },
+            {
+                question: "¿Qué alimento suele tener una mayor huella ecológica?",
+                options: [
+                    "Frutas y verduras locales",
+                    "Legumbres como lentejas y garbanzos",
+                    "Carne de vacuno",
+                    "Cereales como el arroz y el trigo"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué tipo de energía es más sostenible?",
+                options: [
+                    "Energía de carbón",
+                    "Energía nuclear",
+                    "Energías renovables (solar, eólica)",
+                    "Energía de gas natural"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué significa 'consumo responsable'?",
+                options: [
+                    "Comprar todo lo que queremos",
+                    "Consumir solo productos caros",
+                    "Elegir productos con menor impacto ambiental",
+                    "Comprar solo en tiendas físicas"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué podemos hacer para ahorrar agua en casa?",
+                options: [
+                    "Dejar el grifo abierto al lavar los platos",
+                    "Tomar baños largos todos los días",
+                    "Usar la lavadora y lavavajillas solo cuando estén llenos",
+                    "Regar el jardín al mediodía en verano"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué es la movilidad sostenible?",
+                options: [
+                    "Usar siempre el coche, incluso para distancias cortas",
+                    "Comprar un coche nuevo cada año",
+                    "Utilizar transporte público, caminar o usar bicicleta",
+                    "Viajar siempre en avión"
+                ],
+                correct: 2
+            },
+            {
+                question: "¿Qué ventaja tiene comprar productos locales?",
+                options: [
+                    "Son siempre más baratos",
+                    "Reducen la huella de carbono del transporte",
+                    "Siempre son de mejor calidad",
+                    "No tienen ninguna ventaja especial"
+                ],
+                correct: 1
+            }
+        ];
+
+        // Variables del juego
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+
+        // Elementos del DOM
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionContainer = document.getElementById('question-container');
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const finalScore = document.getElementById('final-score');
+        const resultMessage = document.getElementById('result-message');
+
+        // Inicializar el juego
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', restartGame);
+        prevBtn.addEventListener('click', showPreviousQuestion);
+        nextBtn.addEventListener('click', showNextQuestion);
+
+        // Función para comenzar el juego
+        function startGame() {
+            startScreen.classList.remove('active');
+            quizScreen.classList.add('active');
+            showQuestion();
+            updateProgressBar();
+        }
+
+        // Función para mostrar la pregunta actual
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            questionContainer.innerHTML = `
+                <div class="question">
+                    <div class="question-number">Pregunta ${currentQuestion + 1} de ${questions.length}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <div class="option ${userAnswers[currentQuestion] === index ? 'selected' : ''}" 
+                                 onclick="selectOption(${index})">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Actualizar estado de los botones
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Ver Resultados' : 'Siguiente';
+        }
+
+        // Función para seleccionar una opción
+        function selectOption(index) {
+            userAnswers[currentQuestion] = index;
+            showQuestion();
+            
+            // Verificar si la respuesta es correcta
+            if (index === questions[currentQuestion].correct) {
+                // Solo sumar puntos si no se había respondido antes
+                if (userAnswers[currentQuestion] !== null && userAnswers[currentQuestion] !== undefined) {
+                    // Verificar si ya se había sumado el punto para esta pregunta
+                    const questionId = currentQuestion;
+                    const wasAnswered = userAnswers[questionId] !== null;
+                    
+                    if (!wasAnswered) {
+                        score++;
+                    }
+                }
+            }
+        }
+
+        // Función para mostrar la siguiente pregunta
+        function showNextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+                updateProgressBar();
+            } else {
+                // Mostrar resultados
+                showResults();
+            }
+        }
+
+        // Función para mostrar la pregunta anterior
+        function showPreviousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+                updateProgressBar();
+            }
+        }
+
+        // Función para actualizar la barra de progreso
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Función para mostrar los resultados
+        function showResults() {
+            // Calcular puntuación final
+            let finalScoreValue = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === questions[index].correct) {
+                    finalScoreValue++;
+                }
+            });
+            
+            // Mostrar pantalla de resultados
+            quizScreen.classList.remove('active');
+            resultScreen.classList.add('active');
+            
+            // Mostrar puntuación
+            finalScore.textContent = `${finalScoreValue}/${questions.length}`;
+            
+            // Mostrar mensaje según la puntuación
+            let message = "";
+            if (finalScoreValue <= 3) {
+                message = "Tienes conceptos básicos sobre la huella ecológica, pero aún puedes aprender mucho. ¡Sigue informándote sobre cómo cuidar nuestro planeta!";
+            } else if (finalScoreValue <= 7) {
+                message = "¡Buen trabajo! Tienes un conocimiento decente sobre la huella ecológica. Sigue mejorando tus hábitos para ser más sostenible.";
+            } else {
+                message = "¡Excelente! Tienes un gran conocimiento sobre la huella ecológica y cómo reducir tu impacto ambiental. ¡Sigue siendo un ejemplo para los demás!";
+            }
+            
+            resultMessage.textContent = message;
+        }
+
+        // Función para reiniciar el juego
+        function restartGame() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            
+            resultScreen.classList.remove('active');
+            quizScreen.classList.add('active');
+            
+            showQuestion();
+            updateProgressBar();
+        }
+    </script>
+</body>
+</html>
