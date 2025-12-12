@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reduce tu Huella: Batalla Contra la Contaminación</title>
+    <title>Juega para Reducir tu Huella</title>
     <style>
         * {
             margin: 0;
@@ -13,1254 +13,267 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a5276, #117a65);
-            color: white;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 10px;
-            overflow-x: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('imagen 2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding: 20px;
+            color: #fff;
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 900px;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            margin: 10px 0;
-            border: 3px solid #28a745;
+            text-align: center;
+            background-color: rgba(20, 60, 30, 0.85);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border: 3px solid #4CAF50;
+            position: relative;
+            overflow: hidden;
         }
         
-        header {
-            text-align: center;
-            margin-bottom: 15px;
+        /* Efecto de hojas decorativas */
+        .leaf {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0.2;
+        }
+        
+        .leaf-1 {
+            top: 20px;
+            left: 20px;
+            transform: rotate(15deg);
+        }
+        
+        .leaf-2 {
+            bottom: 20px;
+            right: 20px;
+            transform: rotate(-30deg);
         }
         
         h1 {
-            color: #28a745;
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            text-shadow: 0 0 10px rgba(40, 167, 69, 0.7);
-            margin-bottom: 8px;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             line-height: 1.2;
         }
         
         .subtitle {
-            color: #17a2b8;
-            font-size: clamp(0.9rem, 3vw, 1.2rem);
-            margin-bottom: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #c8e6c9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .game-stats {
+        .buttons-container {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
-            justify-content: space-between;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 12px;
-            border-radius: 10px;
-            margin: 12px 0;
-            border: 2px solid #28a745;
-            gap: 8px;
+            gap: 50px;
+            margin-top: 40px;
         }
         
-        .stat {
-            text-align: center;
-            flex: 1;
-            min-width: 80px;
-        }
-        
-        .stat-value {
-            font-size: clamp(1.4rem, 4vw, 1.8rem);
-            font-weight: bold;
-            color: #28a745;
-            text-shadow: 0 0 5px rgba(40, 167, 69, 0.7);
-        }
-        
-        .stat div:last-child {
-            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
-        }
-        
-        .game-area {
-            position: relative;
-            height: 60vh;
-            min-height: 300px;
-            max-height: 500px;
-            background: linear-gradient(to bottom, #1a5276, #148f77);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 15px 0;
-            border: 3px solid #117a65;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-        
-        .player {
-            position: absolute;
-            width: clamp(50px, 12vw, 80px);
-            height: clamp(50px, 12vw, 80px);
-            background: #28a745;
-            border-radius: 50%;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            box-shadow: 0 0 15px rgba(40, 167, 69, 0.8);
-            z-index: 10;
-            transition: all 0.1s ease;
-        }
-        
-        .player.shielded {
-            box-shadow: 0 0 20px #17a2b8, 0 0 30px #17a2b8;
-            border: 3px solid #17a2b8;
-        }
-        
-        .player.double-damage {
-            box-shadow: 0 0 20px #ff9800, 0 0 30px #ff9800;
-            border: 3px solid #ff9800;
-        }
-        
-        .player.speed-boost {
-            box-shadow: 0 0 20px #9c27b0, 0 0 30px #9c27b0;
-            border: 3px solid #9c27b0;
-        }
-        
-        .enemy {
-            position: absolute;
-            width: clamp(40px, 10vw, 60px);
-            height: clamp(40px, 10vw, 60px);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-            animation: float 3s infinite ease-in-out;
-        }
-        
-        .enemy.plastic {
-            background: #3498db;
-            border: 3px solid #1a5276;
-        }
-        
-        .enemy.paper {
-            background: #f1c40f;
-            border: 3px solid #b7950b;
-        }
-        
-        .enemy.glass {
-            background: #2ecc71;
-            border: 3px solid #27ae60;
-        }
-        
-        .enemy.organic {
-            background: #e67e22;
-            border: 3px solid #d35400;
-        }
-        
-        .projectile {
-            position: absolute;
-            width: clamp(10px, 3vw, 15px);
-            height: clamp(10px, 3vw, 15px);
-            background: #ffeb3b;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ffeb3b;
-            z-index: 5;
-        }
-        
-        .projectile.double-damage {
-            background: #ff9800;
-            box-shadow: 0 0 10px #ff9800;
-        }
-        
-        .power-up {
-            position: absolute;
-            width: clamp(30px, 8vw, 40px);
-            height: clamp(30px, 8vw, 40px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-            z-index: 8;
-            animation: float 2s infinite ease-in-out;
-        }
-        
-        .power-up.health {
-            background: #dc3545;
-            border: 2px solid #a71e2a;
-        }
-        
-        .power-up.damage {
-            background: #ff9800;
-            border: 2px solid #cc7a00;
-        }
-        
-        .power-up.shield {
-            background: #17a2b8;
-            border: 2px solid #117a8b;
-        }
-        
-        .power-up.speed {
-            background: #9c27b0;
-            border: 2px solid #6a1b9a;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            background: linear-gradient(to bottom, #28a745, #1e7e34);
+        .game-btn {
+            background: linear-gradient(to bottom, #4CAF50, #2E7D32);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            padding: 25px 40px;
+            font-size: 1.8rem;
             font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 2px solid #155724;
-            flex: 1;
-            min-width: 120px;
-            max-width: 200px;
-        }
-        
-        .btn:hover {
-            background: linear-gradient(to bottom, #34ce57, #239a3b);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-        
-        .btn:active {
-            transform: translateY(1px);
-        }
-        
-        .btn-attack {
-            background: linear-gradient(to bottom, #dc3545, #c82333);
-            border: 2px solid #721c24;
-            order: -1;
-            width: 100%;
-            max-width: none;
-        }
-        
-        .btn-attack:hover {
-            background: linear-gradient(to bottom, #e15361, #d92536);
-        }
-        
-        .instructions {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 12px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border: 2px solid #17a2b8;
-        }
-        
-        .instructions h3 {
-            color: #17a2b8;
-            margin-bottom: 8px;
-            text-align: center;
-            font-size: clamp(1rem, 3vw, 1.2rem);
-        }
-        
-        .instructions p {
-            margin-bottom: 8px;
-            line-height: 1.4;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-        }
-        
-        .power-ups-display {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin: 12px 0;
-            gap: 8px;
-        }
-        
-        .power-up-display {
-            text-align: center;
-            padding: 8px 5px;
-            border-radius: 8px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid #ffc107;
-            width: clamp(90px, 22vw, 120px);
+            width: 280px;
+            box-shadow: 0 8px 0 #1B5E20, 0 15px 20px rgba(0, 0, 0, 0.3);
             position: relative;
+            overflow: hidden;
         }
         
-        .power-up-display.active {
-            border-color: #28a745;
-            box-shadow: 0 0 10px #28a745;
+        .game-btn:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 0 #1B5E20, 0 20px 25px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to bottom, #66BB6A, #388E3C);
         }
         
-        .power-up-icon {
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            margin-bottom: 3px;
+        .game-btn:active {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 0 #1B5E20, 0 10px 15px rgba(0, 0, 0, 0.3);
         }
         
-        .power-up-display div:nth-child(2) {
-            font-size: clamp(0.7rem, 2vw, 0.8rem);
-            line-height: 1.2;
-        }
-        
-        .power-up-timer {
-            position: absolute;
-            bottom: 5px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: #28a745;
-            transform-origin: left;
-        }
-        
-        .game-over {
+        .game-btn::after {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            display: none;
-            padding: 20px;
-            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
         
-        .game-over h2 {
-            font-size: clamp(2rem, 6vw, 3rem);
-            color: #dc3545;
+        .game-btn:hover::after {
+            opacity: 1;
+        }
+        
+        .game-icon {
+            display: block;
+            font-size: 3rem;
             margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(220, 53, 69, 0.7);
         }
         
-        .game-over p {
-            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
-            margin-bottom: 8px;
+        .game-description {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: #e8f5e9;
+            opacity: 0.9;
+            font-weight: normal;
         }
         
-        .stats-details {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 12px 0;
+        .footer {
+            margin-top: 50px;
+            font-size: 1rem;
+            color: #a5d6a7;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
         }
         
-        .stat-detail {
-            background: rgba(40, 167, 69, 0.2);
-            padding: 8px;
-            border-radius: 8px;
-            text-align: center;
-            min-width: 100px;
-        }
-        
-        .stat-detail div:first-child {
-            font-size: clamp(0.7rem, 2vw, 0.8rem);
-        }
-        
-        .stat-detail div:last-child {
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            font-weight: bold;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        @keyframes shoot {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-500px); opacity: 0; }
-        }
-        
-        .damage {
-            animation: damage 0.3s ease;
-        }
-        
-        @keyframes damage {
-            0% { background-color: #28a745; }
-            50% { background-color: #dc3545; }
-            100% { background-color: #28a745; }
-        }
-        
-        .level-up {
-            animation: levelUp 0.5s ease;
-        }
-        
-        @keyframes levelUp {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        
-        .message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            z-index: 50;
-            display: none;
-            border: 2px solid #28a745;
-            width: 90%;
-            max-width: 400px;
-        }
-        
-        .message h3 {
-            color: #28a745;
-            margin-bottom: 8px;
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
-        }
-        
-        .message p {
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
-            margin-bottom: 10px;
-        }
-        
-        .eco-fact {
-            background: rgba(40, 167, 69, 0.2);
-            padding: 8px;
-            border-radius: 8px;
-            margin: 8px 0;
-            border-left: 4px solid #28a745;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-        }
-        
-        .notification {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            padding: 8px 15px;
-            border-radius: 8px;
-            z-index: 60;
-            display: none;
-            border: 2px solid #28a745;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-            text-align: center;
-            width: 90%;
-            max-width: 300px;
-        }
-        
-        .points-popup {
-            position: absolute;
-            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-            font-weight: bold;
-            color: #ffeb3b;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-            z-index: 20;
-            animation: pointsFloat 1.5s ease-out forwards;
-        }
-        
-        @keyframes pointsFloat {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-50px); opacity: 0; }
-        }
-        
-        /* Estilos específicos para orientación horizontal en móviles */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .game-area {
-                height: 70vh;
-                min-height: 250px;
-            }
-            
-            .container {
-                padding: 10px;
-            }
-            
-            .game-stats {
-                padding: 8px;
-            }
-            
-            .stat {
-                min-width: 70px;
-            }
-            
-            .instructions, .power-ups-display {
-                margin: 8px 0;
-            }
-            
-            .controls {
-                margin-top: 10px;
-            }
-        }
-        
-        /* Mejoras para tablets */
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .container {
-                padding: 20px;
-            }
-            
-            .game-area {
-                height: 50vh;
-            }
-        }
-        
-        /* Estilos para pantallas muy pequeñas */
-        @media (max-width: 350px) {
-            .power-ups-display {
-                gap: 5px;
-            }
-            
-            .power-up-display {
-                width: calc(50% - 10px);
-            }
-            
-            .controls .btn:not(.btn-attack) {
-                min-width: 100px;
-            }
-        }
-        
-        /* Mejora de accesibilidad para botones en móviles */
+        /* Estilos para móviles */
         @media (max-width: 768px) {
-            .btn {
-                padding: 12px 15px;
-                min-height: 44px;
+            .container {
+                padding: 30px 20px;
             }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .buttons-container {
+                gap: 30px;
+            }
+            
+            .game-btn {
+                width: 100%;
+                max-width: 300px;
+                padding: 20px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Animación de entrada */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            animation: fadeIn 1s ease-out;
+        }
+        
+        /* Efecto de huella ecológica */
+        .footprint {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,20 C65,20 75,30 75,45 C75,60 65,70 50,70 C35,70 25,60 25,45 C25,30 35,20 50,20 Z" fill="white"/><circle cx="40" cy="35" r="10" fill="white"/><circle cx="60" cy="35" r="10" fill="white"/></svg>');
+        }
+        
+        .footprint-1 {
+            top: 15%;
+            left: 10%;
+        }
+        
+        .footprint-2 {
+            bottom: 15%;
+            right: 10%;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Reduce tu Huella</h1>
-            <p class="subtitle">¡Combate la contaminación y salva el planeta!</p>
-        </header>
-        
-        <div class="game-stats">
-            <div class="stat">
-                <div class="stat-value" id="score">0</div>
-                <div>Puntuación</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value" id="health">100</div>
-                <div>Salud</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value" id="level">1</div>
-                <div>Nivel</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value" id="enemies-defeated">0</div>
-                <div>Derrotados</div>
-            </div>
+        <!-- Elementos decorativos -->
+        <div class="leaf leaf-1">
+            <i class="fas fa-leaf" style="font-size: 80px; color: #4CAF50;"></i>
         </div>
-        
-        <div class="instructions">
-            <h3>Instrucciones</h3>
-            <p>Usa las flechas izquierda/derecha para moverte y la barra espaciadora para disparar.</p>
-            <p>Destruye los residuos antes de que lleguen al suelo. Cada residuo destruido mejora el planeta.</p>
-            <p>Recoge los power-ups para obtener ventajas temporales.</p>
-            <p>¡El power-up de doble daño también te da el DOBLE de puntos!</p>
-            <p>¡El power-up de velocidad aumenta tu velocidad de movimiento!</p>
+        <div class="leaf leaf-2">
+            <i class="fas fa-leaf" style="font-size: 80px; color: #4CAF50;"></i>
         </div>
+        <div class="footprint footprint-1"></div>
+        <div class="footprint footprint-2"></div>
         
-        <div class="power-ups-display">
-            <div class="power-up-display" id="health-powerup">
-                <div class="power-up-icon">💚</div>
-                <div>+ Salud</div>
-                <div class="power-up-timer" id="health-timer"></div>
-            </div>
-            <div class="power-up-display" id="damage-powerup">
-                <div class="power-up-icon">⚡</div>
-                <div>Doble Daño/Puntos</div>
-                <div class="power-up-timer" id="damage-timer"></div>
-            </div>
-            <div class="power-up-display" id="shield-powerup">
-                <div class="power-up-icon">🛡️</div>
-                <div>Escudo</div>
-                <div class="power-up-timer" id="shield-timer"></div>
-            </div>
-            <div class="power-up-display" id="speed-powerup">
-                <div class="power-up-icon">🚀</div>
-                <div>Velocidad</div>
-                <div class="power-up-timer" id="speed-timer"></div>
-            </div>
-        </div>
+        <h1>JUEGA PARA REDUCIR TU HUELLA</h1>
+        <p class="subtitle">Selecciona uno de nuestros juegos educativos y descubre cómo puedes ayudar al medio ambiente mientras te diviertes</p>
         
-        <div class="game-area" id="game-area">
-            <div class="player" id="player">🌱</div>
-            <div class="message" id="message">
-                <h3>¡Reduce tu Huella!</h3>
-                <p>Presiona ESPACIO para comenzar</p>
-                <div class="eco-fact">
-                    <p>¿Sabías que cada año se vierten 8 millones de toneladas de plástico en los océanos?</p>
+        <div class="buttons-container">
+            <button class="game-btn" id="play1">
+                <div class="game-icon">
+                    <i class="fas fa-recycle"></i>
                 </div>
-            </div>
-            <div class="notification" id="notification"></div>
-            <div class="game-over" id="game-over">
-                <h2>¡Game Over!</h2>
-                <p id="final-score">Puntuación: 0</p>
-                <p id="eco-impact">Impacto ecológico: 0%</p>
-                
-                <div class="stats-details">
-                    <div class="stat-detail">
-                        <div>Nivel alcanzado</div>
-                        <div id="final-level">1</div>
-                    </div>
-                    <div class="stat-detail">
-                        <div>Residuos eliminados</div>
-                        <div id="final-defeated">0</div>
-                    </div>
-                    <div class="stat-detail">
-                        <div>Tiempo jugado</div>
-                        <div id="final-time">0s</div>
-                    </div>
+                JUGAR 1
+                <div class="game-description">Aprende sobre reciclaje y clasificación de residuos</div>
+            </button>
+            
+            <button class="game-btn" id="play2">
+                <div class="game-icon">
+                    <i class="fas fa-sun"></i>
                 </div>
-                
-                <button class="btn" id="restart-btn">Jugar de Nuevo</button>
-            </div>
+                JUGAR 2
+                <div class="game-description">Descubre las energías renovables y sostenibilidad</div>
+            </button>
         </div>
         
-        <div class="controls">
-            <button class="btn" id="left-btn">← Izquierda</button>
-            <button class="btn btn-attack" id="attack-btn">Disparar (ESPACIO)</button>
-            <button class="btn" id="right-btn">Derecha →</button>
+        <div class="footer">
+            <p>Cada juego te enseñará formas prácticas de reducir tu huella de carbono y ayudar al planeta</p>
+            <p style="margin-top: 10px;"><i class="fas fa-globe-americas"></i> ¡Juega y haz la diferencia!</p>
         </div>
     </div>
 
     <script>
-        // Elementos del DOM
-        const gameArea = document.getElementById('game-area');
-        const player = document.getElementById('player');
-        const scoreElement = document.getElementById('score');
-        const healthElement = document.getElementById('health');
-        const levelElement = document.getElementById('level');
-        const enemiesDefeatedElement = document.getElementById('enemies-defeated');
-        const messageElement = document.getElementById('message');
-        const gameOverElement = document.getElementById('game-over');
-        const finalScoreElement = document.getElementById('final-score');
-        const ecoImpactElement = document.getElementById('eco-impact');
-        const finalLevelElement = document.getElementById('final-level');
-        const finalDefeatedElement = document.getElementById('final-defeated');
-        const finalTimeElement = document.getElementById('final-time');
-        const restartBtn = document.getElementById('restart-btn');
-        const leftBtn = document.getElementById('left-btn');
-        const rightBtn = document.getElementById('right-btn');
-        const attackBtn = document.getElementById('attack-btn');
-        const notificationElement = document.getElementById('notification');
-        
-        // Elementos de power-ups
-        const healthPowerupDisplay = document.getElementById('health-powerup');
-        const damagePowerupDisplay = document.getElementById('damage-powerup');
-        const shieldPowerupDisplay = document.getElementById('shield-powerup');
-        const speedPowerupDisplay = document.getElementById('speed-powerup');
-        const healthTimer = document.getElementById('health-timer');
-        const damageTimer = document.getElementById('damage-timer');
-        const shieldTimer = document.getElementById('shield-timer');
-        const speedTimer = document.getElementById('speed-timer');
-        
-        // Variables del juego
-        let score = 0;
-        let health = 100;
-        let level = 1;
-        let enemiesDefeated = 0;
-        let gameActive = false;
-        let playerX = gameArea.offsetWidth / 2 - player.offsetWidth / 2;
-        let enemies = [];
-        let projectiles = [];
-        let powerUps = [];
-        let enemySpeed = 2;
-        let spawnRate = 1000; // ms
-        let lastSpawn = 0;
-        let lastPowerUpSpawn = 0;
-        let powerUpSpawnRate = 10000; // ms
-        let keys = {};
-        let gameLoopId;
-        let ecoImpact = 0;
-        let gameStartTime = 0;
-        let gameTime = 0;
-        
-        // Variables de power-ups
-        let doubleDamageActive = false;
-        let doubleDamageEndTime = 0;
-        let shieldActive = false;
-        let shieldEndTime = 0;
-        let speedBoostActive = false;
-        let speedBoostEndTime = 0;
-        
-        // Tipos de enemigos (residuos)
-        const enemyTypes = [
-            { type: 'plastic', emoji: '🧴', health: 1, points: 10 },
-            { type: 'paper', emoji: '📄', health: 1, points: 15 },
-            { type: 'glass', emoji: '🍶', health: 2, points: 20 },
-            { type: 'organic', emoji: '🍎', health: 1, points: 5 }
-        ];
-        
-        // Tipos de power-ups
-        const powerUpTypes = [
-            { type: 'health', emoji: '💚', effect: 'restoreHealth', duration: 0 },
-            { type: 'damage', emoji: '⚡', effect: 'activateDoubleDamage', duration: 10000 },
-            { type: 'shield', emoji: '🛡️', effect: 'activateShield', duration: 8000 },
-            { type: 'speed', emoji: '🚀', effect: 'activateSpeedBoost', duration: 6000 }
-        ];
-        
-        // Inicializar el juego
-        function initGame() {
-            score = 0;
-            health = 100;
-            level = 1;
-            enemiesDefeated = 0;
-            ecoImpact = 0;
-            enemySpeed = 2;
-            spawnRate = 1000;
-            playerX = gameArea.offsetWidth / 2 - player.offsetWidth / 2;
+        // Función para redirigir a las páginas correspondientes
+        document.getElementById('play1').addEventListener('click', function() {
+            // Efecto visual de clic
+            this.style.transform = 'scale(0.95)';
             
-            enemies = [];
-            projectiles = [];
-            powerUps = [];
-            
-            // Resetear power-ups
-            doubleDamageActive = false;
-            shieldActive = false;
-            speedBoostActive = false;
-            player.classList.remove('shielded');
-            player.classList.remove('double-damage');
-            player.classList.remove('speed-boost');
-            
-            updateStats();
-            player.style.left = playerX + 'px';
-            
-            gameOverElement.style.display = 'none';
-            messageElement.style.display = 'block';
-            
-            // Limpiar enemigos, proyectiles y power-ups existentes
-            document.querySelectorAll('.enemy, .projectile, .power-up, .points-popup').forEach(el => el.remove());
-            
-            // Actualizar displays de power-ups
-            updatePowerUpDisplays();
-        }
-        
-        // Comenzar el juego
-        function startGame() {
-            if (gameActive) return;
-            
-            gameActive = true;
-            gameStartTime = Date.now();
-            messageElement.style.display = 'none';
-            
-            gameLoopId = requestAnimationFrame(gameLoop);
-        }
-        
-        // Bucle principal del juego
-        function gameLoop(timestamp) {
-            if (!gameActive) return;
-            
-            // Actualizar tiempo de juego
-            gameTime = Math.floor((Date.now() - gameStartTime) / 1000);
-            
-            // Mover al jugador
-            movePlayer();
-            
-            // Generar enemigos
-            if (timestamp - lastSpawn > spawnRate) {
-                spawnEnemy();
-                lastSpawn = timestamp;
-            }
-            
-            // Generar power-ups
-            if (timestamp - lastPowerUpSpawn > powerUpSpawnRate) {
-                spawnPowerUp();
-                lastPowerUpSpawn = timestamp;
-            }
-            
-            // Mover enemigos
-            moveEnemies();
-            
-            // Mover proyectiles
-            moveProjectiles();
-            
-            // Mover power-ups
-            movePowerUps();
-            
-            // Verificar colisiones
-            checkCollisions();
-            
-            // Actualizar power-ups activos
-            updateActivePowerUps();
-            
-            // Verificar si el juego ha terminado
-            if (health <= 0) {
-                endGame();
-                return;
-            }
-            
-            // Continuar el bucle
-            gameLoopId = requestAnimationFrame(gameLoop);
-        }
-        
-        // Mover al jugador
-        function movePlayer() {
-            const speedMultiplier = speedBoostActive ? 1.8 : 1;
-            // Velocidad base reducida de 7 a 5 para hacer la plantita más lenta
-            const baseSpeed = 5;
-            const actualSpeed = baseSpeed * speedMultiplier;
-            
-            if (keys['ArrowLeft'] && playerX > 0) {
-                playerX -= actualSpeed;
-            }
-            if (keys['ArrowRight'] && playerX < gameArea.offsetWidth - player.offsetWidth) {
-                playerX += actualSpeed;
-            }
-            
-            player.style.left = playerX + 'px';
-        }
-        
-        // Generar enemigo
-        function spawnEnemy() {
-            const type = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
-            const x = Math.random() * (gameArea.offsetWidth - player.offsetWidth);
-            
-            const enemy = document.createElement('div');
-            enemy.className = `enemy ${type.type}`;
-            enemy.style.left = x + 'px';
-            enemy.style.top = '-60px';
-            enemy.innerHTML = type.emoji;
-            enemy.dataset.type = type.type;
-            enemy.dataset.health = type.health;
-            enemy.dataset.points = type.points;
-            
-            gameArea.appendChild(enemy);
-            enemies.push(enemy);
-        }
-        
-        // Generar power-up
-        function spawnPowerUp() {
-            const type = powerUpTypes[Math.floor(Math.random() * powerUpTypes.length)];
-            const x = Math.random() * (gameArea.offsetWidth - player.offsetWidth);
-            
-            const powerUp = document.createElement('div');
-            powerUp.className = `power-up ${type.type}`;
-            powerUp.style.left = x + 'px';
-            powerUp.style.top = '-40px';
-            powerUp.innerHTML = type.emoji;
-            powerUp.dataset.type = type.type;
-            powerUp.dataset.effect = type.effect;
-            powerUp.dataset.duration = type.duration;
-            
-            gameArea.appendChild(powerUp);
-            powerUps.push(powerUp);
-        }
-        
-        // Mover enemigos
-        function moveEnemies() {
-            for (let i = enemies.length - 1; i >= 0; i--) {
-                const enemy = enemies[i];
-                const currentTop = parseInt(enemy.style.top);
-                const newTop = currentTop + enemySpeed;
-                
-                enemy.style.top = newTop + 'px';
-                
-                // Si el enemigo llega al fondo
-                if (newTop > gameArea.offsetHeight) {
-                    enemy.remove();
-                    enemies.splice(i, 1);
-                    takeDamage(10);
-                }
-            }
-        }
-        
-        // Mover power-ups
-        function movePowerUps() {
-            for (let i = powerUps.length - 1; i >= 0; i--) {
-                const powerUp = powerUps[i];
-                const currentTop = parseInt(powerUp.style.top);
-                const newTop = currentTop + 2;
-                
-                powerUp.style.top = newTop + 'px';
-                
-                // Si el power-up llega al fondo
-                if (newTop > gameArea.offsetHeight) {
-                    powerUp.remove();
-                    powerUps.splice(i, 1);
-                }
-            }
-        }
-        
-        // Disparar proyectil
-        function shoot() {
-            if (!gameActive) {
-                startGame();
-                return;
-            }
-            
-            const projectile = document.createElement('div');
-            projectile.className = `projectile ${doubleDamageActive ? 'double-damage' : ''}`;
-            projectile.style.left = (playerX + player.offsetWidth / 2 - 7.5) + 'px';
-            projectile.style.bottom = '100px';
-            
-            gameArea.appendChild(projectile);
-            projectiles.push(projectile);
-            
-            // Animación del proyectil
-            projectile.style.animation = `shoot 0.5s linear forwards`;
-            
-            // Eliminar el proyectil después de la animación
+            // Redirigir después de un breve delay para el efecto visual
             setTimeout(() => {
-                if (projectile.parentNode) {
-                    projectile.remove();
-                    const index = projectiles.indexOf(projectile);
-                    if (index > -1) projectiles.splice(index, 1);
-                }
-            }, 500);
-        }
+                window.location.href = 'jugar1.html';
+            }, 200);
+        });
         
-        // Mover proyectiles
-        function moveProjectiles() {
-            for (let i = projectiles.length - 1; i >= 0; i--) {
-                const projectile = projectiles[i];
-                const currentBottom = parseInt(projectile.style.bottom);
-                const newBottom = currentBottom + 10;
-                
-                projectile.style.bottom = newBottom + 'px';
-                
-                // Si el proyectil sale de la pantalla
-                if (newBottom > gameArea.offsetHeight) {
-                    projectile.remove();
-                    projectiles.splice(i, 1);
-                }
-            }
-        }
-        
-        // Verificar colisiones
-        function checkCollisions() {
-            // Colisiones entre proyectiles y enemigos
-            for (let i = projectiles.length - 1; i >= 0; i--) {
-                const projectile = projectiles[i];
-                const projectileRect = projectile.getBoundingClientRect();
-                
-                for (let j = enemies.length - 1; j >= 0; j--) {
-                    const enemy = enemies[j];
-                    const enemyRect = enemy.getBoundingClientRect();
-                    
-                    if (isColliding(projectileRect, enemyRect)) {
-                        // Reducir salud del enemigo
-                        let enemyHealth = parseInt(enemy.dataset.health);
-                        enemyHealth -= doubleDamageActive ? 2 : 1;
-                        
-                        if (enemyHealth <= 0) {
-                            // Enemigo destruido
-                            const basePoints = parseInt(enemy.dataset.points);
-                            const points = doubleDamageActive ? basePoints * 2 : basePoints;
-                            score += points;
-                            enemiesDefeated++;
-                            ecoImpact += 2;
-                            
-                            // Mostrar popup de puntos
-                            showPointsPopup(enemyRect.left + enemyRect.width / 2, enemyRect.top, points);
-                            
-                            enemy.remove();
-                            enemies.splice(j, 1);
-                            
-                            // Efecto visual
-                            player.classList.add('level-up');
-                            setTimeout(() => player.classList.remove('level-up'), 500);
-                        } else {
-                            enemy.dataset.health = enemyHealth;
-                        }
-                        
-                        // Eliminar proyectil
-                        projectile.remove();
-                        projectiles.splice(i, 1);
-                        
-                        updateStats();
-                        break;
-                    }
-                }
-            }
-            
-            // Colisiones entre jugador y power-ups
-            const playerRect = player.getBoundingClientRect();
-            for (let i = powerUps.length - 1; i >= 0; i--) {
-                const powerUp = powerUps[i];
-                const powerUpRect = powerUp.getBoundingClientRect();
-                
-                if (isColliding(playerRect, powerUpRect)) {
-                    // Aplicar efecto del power-up
-                    applyPowerUp(powerUp.dataset.effect, parseInt(powerUp.dataset.duration));
-                    
-                    // Mostrar notificación
-                    showNotification(`¡Power-up ${powerUp.innerHTML} obtenido!`);
-                    
-                    // Eliminar power-up
-                    powerUp.remove();
-                    powerUps.splice(i, 1);
-                }
-            }
-            
-            // Subir de nivel
-            if (enemiesDefeated >= level * 10) {
-                levelUp();
-            }
-        }
-        
-        // Mostrar popup de puntos
-        function showPointsPopup(x, y, points) {
-            const popup = document.createElement('div');
-            popup.className = 'points-popup';
-            popup.textContent = `+${points}`;
-            popup.style.left = `${x}px`;
-            popup.style.top = `${y}px`;
-            
-            gameArea.appendChild(popup);
-            
-            // Eliminar popup después de la animación
+        document.getElementById('play2').addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
             setTimeout(() => {
-                if (popup.parentNode) {
-                    popup.remove();
-                }
-            }, 1500);
-        }
-        
-        // Aplicar efecto de power-up
-        function applyPowerUp(effect, duration) {
-            switch(effect) {
-                case 'restoreHealth':
-                    health = Math.min(100, health + 30);
-                    updateStats();
-                    break;
-                case 'activateDoubleDamage':
-                    doubleDamageActive = true;
-                    doubleDamageEndTime = Date.now() + duration;
-                    player.classList.add('double-damage');
-                    damagePowerupDisplay.classList.add('active');
-                    break;
-                case 'activateShield':
-                    shieldActive = true;
-                    shieldEndTime = Date.now() + duration;
-                    player.classList.add('shielded');
-                    shieldPowerupDisplay.classList.add('active');
-                    break;
-                case 'activateSpeedBoost':
-                    speedBoostActive = true;
-                    speedBoostEndTime = Date.now() + duration;
-                    player.classList.add('speed-boost');
-                    speedPowerupDisplay.classList.add('active');
-                    break;
-            }
-        }
-        
-        // Actualizar power-ups activos
-        function updateActivePowerUps() {
-            const now = Date.now();
-            
-            // Verificar double damage
-            if (doubleDamageActive && now > doubleDamageEndTime) {
-                doubleDamageActive = false;
-                player.classList.remove('double-damage');
-                damagePowerupDisplay.classList.remove('active');
-            }
-            
-            // Verificar escudo
-            if (shieldActive && now > shieldEndTime) {
-                shieldActive = false;
-                player.classList.remove('shielded');
-                shieldPowerupDisplay.classList.remove('active');
-            }
-            
-            // Verificar velocidad
-            if (speedBoostActive && now > speedBoostEndTime) {
-                speedBoostActive = false;
-                player.classList.remove('speed-boost');
-                speedPowerupDisplay.classList.remove('active');
-            }
-            
-            // Actualizar timers visuales
-            updatePowerUpTimers();
-        }
-        
-        // Actualizar timers visuales de power-ups
-        function updatePowerUpTimers() {
-            const now = Date.now();
-            
-            if (doubleDamageActive) {
-                const timeLeft = doubleDamageEndTime - now;
-                const percentage = (timeLeft / 10000) * 100;
-                damageTimer.style.transform = `scaleX(${percentage / 100})`;
-            } else {
-                damageTimer.style.transform = 'scaleX(0)';
-            }
-            
-            if (shieldActive) {
-                const timeLeft = shieldEndTime - now;
-                const percentage = (timeLeft / 8000) * 100;
-                shieldTimer.style.transform = `scaleX(${percentage / 100})`;
-            } else {
-                shieldTimer.style.transform = 'scaleX(0)';
-            }
-            
-            if (speedBoostActive) {
-                const timeLeft = speedBoostEndTime - now;
-                const percentage = (timeLeft / 6000) * 100;
-                speedTimer.style.transform = `scaleX(${percentage / 100})`;
-            } else {
-                speedTimer.style.transform = 'scaleX(0)';
-            }
-        }
-        
-        // Actualizar displays de power-ups
-        function updatePowerUpDisplays() {
-            healthTimer.style.transform = 'scaleX(0)';
-            damageTimer.style.transform = 'scaleX(0)';
-            shieldTimer.style.transform = 'scaleX(0)';
-            speedTimer.style.transform = 'scaleX(0)';
-            
-            healthPowerupDisplay.classList.remove('active');
-            damagePowerupDisplay.classList.remove('active');
-            shieldPowerupDisplay.classList.remove('active');
-            speedPowerupDisplay.classList.remove('active');
-        }
-        
-        // Mostrar notificación
-        function showNotification(message) {
-            notificationElement.textContent = message;
-            notificationElement.style.display = 'block';
-            
-            setTimeout(() => {
-                notificationElement.style.display = 'none';
-            }, 2000);
-        }
-        
-        // Verificar si dos elementos están colisionando
-        function isColliding(rect1, rect2) {
-            return !(
-                rect1.right < rect2.left ||
-                rect1.left > rect2.right ||
-                rect1.bottom < rect2.top ||
-                rect1.top > rect2.bottom
-            );
-        }
-        
-        // Recibir daño
-        function takeDamage(amount) {
-            if (shieldActive) {
-                showNotification("¡Escudo activo! No recibiste daño.");
-                return;
-            }
-            
-            health -= amount;
-            health = Math.max(0, health);
-            
-            player.classList.add('damage');
-            setTimeout(() => player.classList.remove('damage'), 300);
-            
-            updateStats();
-        }
-        
-        // Subir de nivel
-        function levelUp() {
-            level++;
-            enemySpeed += 0.3;
-            spawnRate = Math.max(400, spawnRate - 50);
-            
-            // Restaurar salud
-            health = Math.min(100, health + 25);
-            
-            player.classList.add('level-up');
-            setTimeout(() => player.classList.remove('level-up'), 500);
-            
-            showNotification(`¡Nivel ${level} alcanzado!`);
-            
-            updateStats();
-        }
-        
-        // Actualizar estadísticas en la interfaz
-        function updateStats() {
-            scoreElement.textContent = score;
-            healthElement.textContent = health;
-            levelElement.textContent = level;
-            enemiesDefeatedElement.textContent = enemiesDefeated;
-        }
-        
-        // Finalizar el juego
-        function endGame() {
-            gameActive = false;
-            cancelAnimationFrame(gameLoopId);
-            
-            finalScoreElement.textContent = `Puntuación: ${score}`;
-            ecoImpactElement.textContent = `Impacto ecológico: ${Math.min(100, ecoImpact)}%`;
-            finalLevelElement.textContent = level;
-            finalDefeatedElement.textContent = enemiesDefeated;
-            finalTimeElement.textContent = `${gameTime}s`;
-            
-            gameOverElement.style.display = 'flex';
-        }
-        
-        // Event Listeners para teclado
-        document.addEventListener('keydown', (e) => {
-            keys[e.key] = true;
-            
-            if (e.key === ' ') {
-                e.preventDefault();
-                shoot();
-            }
+                window.location.href = 'jugar2.html';
+            }, 200);
         });
         
-        document.addEventListener('keyup', (e) => {
-            keys[e.key] = false;
-        });
-        
-        // Event Listeners para botones táctiles
-        leftBtn.addEventListener('mousedown', () => keys['ArrowLeft'] = true);
-        leftBtn.addEventListener('mouseup', () => keys['ArrowLeft'] = false);
-        leftBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            keys['ArrowLeft'] = true;
-        });
-        leftBtn.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            keys['ArrowLeft'] = false;
-        });
-        
-        rightBtn.addEventListener('mousedown', () => keys['ArrowRight'] = true);
-        rightBtn.addEventListener('mouseup', () => keys['ArrowRight'] = false);
-        rightBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            keys['ArrowRight'] = true;
-        });
-        rightBtn.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            keys['ArrowRight'] = false;
-        });
-        
-        attackBtn.addEventListener('click', shoot);
-        attackBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            shoot();
-        });
-        
-        restartBtn.addEventListener('click', initGame);
-        restartBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            initGame();
-        });
-        
-        // Inicializar el juego al cargar la página
-        window.addEventListener('DOMContentLoaded', initGame);
-        
-        // Ajustar el juego cuando cambia el tamaño de la ventana
-        window.addEventListener('resize', () => {
-            if (gameActive) {
-                playerX = Math.min(playerX, gameArea.offsetWidth - player.offsetWidth);
-                player.style.left = playerX + 'px';
-            }
+        // Efecto hover adicional
+        const buttons = document.querySelectorAll('.game-btn');
+        buttons.forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            button.addEventListener('mouseup', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
         });
     </script>
 </body>
